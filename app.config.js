@@ -20,6 +20,9 @@ export default {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
+      package:{
+        
+      }
     },
     web: {
       bundler: "metro",
@@ -30,7 +33,7 @@ export default {
       [
         "expo-router",
         {
-          origin: "https://reg.ubru.ac.th",
+          // origin: process.env.EXPO_PUBLIC_API_BASE_URL,
         },
       ],
     ],
