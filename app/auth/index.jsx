@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Text, TextInput, useTheme, Button } from 'react-native-paper';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet } from "react-native";
+import { StyleSheet, BackHandler, TouchableWithoutFeedback ,Platform  } from "react-native";
 import { asyncStorage_setItem } from "@/utility/db/AsyncStorage";
 import { router } from "expo-router";
 
@@ -60,7 +60,8 @@ export default function Auth() {
       console.log("response messegae: ", response.data.msg);
       console.log("response Status: ", response.status);
       await asyncStorage_setItem('SSID', SSID);
-      router.replace("../grades", { relativeToDirectory: true });
+      await asyncStorage_setItem('USER',{textUser: dataInput.STDID, txtPass: dataInput.pass});
+      router.replace("/..");
     } catch (error) {
       setIsLoading(false)
       console.error("Auth error:", error.response.data.msg);
@@ -78,6 +79,12 @@ export default function Auth() {
     }
   }
   useEffect(() => {
+    const onBackPress = () => {
+      // Returning true disables the default back behavior
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   }, []);
 
   return (
@@ -90,14 +97,14 @@ export default function Auth() {
         label="STDID"
         // placeholder="STDID" 
         keyboardType="numeric"
-        
+
         right={
           dataInput.STDID.length == maxSTDID
-            ? <TextInput.Icon icon="check" />
+            ? <TextInput.Icon color={'green'} icon="check" rippleColor="transparent"/>
             : <TextInput.Affix text={`${dataInput.STDID.length}/${maxSTDID}`} />
         }
         value={dataInput.STDID}
-        onChangeText={(text)=>onSTDID_change(text)}
+        onChangeText={(text) => onSTDID_change(text)}
       />
 
 
@@ -107,11 +114,11 @@ export default function Auth() {
         // placeholder="Password"
         secureTextEntry={isTextSecure}
         value={dataInput.pass}
-        onChangeText={(text)=>setDataInput({...dataInput, pass: text})}
+        onChangeText={(text) => setDataInput({ ...dataInput, pass: text })}
         right={
           <TextInput.Icon
             icon={isTextSecure ? "eye-off" : "eye"}
-            onPress={()=>setIsTextSecure(!isTextSecure)}
+            onPress={() => setIsTextSecure(!isTextSecure)}
           />
         }
       />
