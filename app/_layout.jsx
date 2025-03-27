@@ -5,7 +5,7 @@ import {
   MD3LightTheme,
   PaperProvider,
 } from 'react-native-paper';
-import { SafeAreaProvider } from "react-native-safe-area-context";
+
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -13,7 +13,6 @@ export default function RootLayout() {
 
 
   return (
-    //<SafeAreaProvider>
       <PaperProvider theme={paperTheme}>
         <Stack
           screenOptions={{
@@ -29,6 +28,5 @@ export default function RootLayout() {
           <Stack.Screen name="index" />
         </Stack>
       </PaperProvider >
-    //</SafeAreaProvider>
   );
 }

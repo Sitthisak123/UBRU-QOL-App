@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Text, TextInput, useTheme, Button } from 'react-native-paper';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, BackHandler, TouchableWithoutFeedback ,Platform  } from "react-native";
+import { StyleSheet, BackHandler, TouchableWithoutFeedback, Platform } from "react-native";
 import { asyncStorage_setItem } from "@/utility/db/AsyncStorage";
 import { router } from "expo-router";
 
@@ -11,7 +11,7 @@ export default function Auth() {
   const [text, setText] = useState('')
   const theme = useTheme();
   const [isTextSecure, setIsTextSecure] = useState(true);
-  const [dataInput, setDataInput] = useState({ STDID: '', pass: '' });
+  const [dataInput, setDataInput] = useState({ STDID: '66122420321', pass: 'JamesGamer1' });
   const [isLoading, setIsLoading] = useState(false);
   const [isTextExceed, setTextExceed] = useState(false);
   const customStyles = StyleSheet.create({
@@ -51,7 +51,7 @@ export default function Auth() {
         },
         {
           headers: {
-            // 'Cookie': 'ASP.NET_SessionId=???',
+            // 'Cookie': 'ASP.NET_SessionId=[???]',
             // 'Content-Type': 'multipart/form-data', // Ensure correct content type for form data
           },
         }
@@ -60,7 +60,7 @@ export default function Auth() {
       console.log("response messegae: ", response.data.msg);
       console.log("response Status: ", response.status);
       await asyncStorage_setItem('SSID', SSID);
-      await asyncStorage_setItem('USER',{textUser: dataInput.STDID, txtPass: dataInput.pass});
+      await asyncStorage_setItem('USER', { textUser: dataInput.STDID, txtPass: dataInput.pass });
       router.replace("/..");
     } catch (error) {
       setIsLoading(false)
@@ -88,7 +88,6 @@ export default function Auth() {
   }, []);
 
   return (
-
     <SafeAreaView style={customStyles.view}>
       <Text style={customStyles.text} variant="displayLarge">Sign in</Text>
       <TextInput
@@ -100,7 +99,7 @@ export default function Auth() {
 
         right={
           dataInput.STDID.length == maxSTDID
-            ? <TextInput.Icon color={'green'} icon="check" rippleColor="transparent"/>
+            ? <TextInput.Icon color={'green'} icon="check" rippleColor="transparent" />
             : <TextInput.Affix text={`${dataInput.STDID.length}/${maxSTDID}`} />
         }
         value={dataInput.STDID}
